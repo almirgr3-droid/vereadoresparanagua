@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vereadores de Paranaguá – 19ª Legislatura</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef2f4;--panel:#fff;--ink:#14232f;--muted:#5a6b78;--line:#d3dce2;--track:#e3eaee;--idle:#a9bccb;
+  --c0:#1d4e89;--c1:#d99500;--c2:#16897a;--c3:#b5446e;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1a22;--panel:#16252f;--ink:#e8eef2;--muted:#9fb0bc;--line:#263945;--track:#243642;--idle:#4a6272;
+  --c0:#5b9be0;--c1:#f0b429;--c2:#3fc1ae;--c3:#e272a0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1a22;--panel:#16252f;--ink:#e8eef2;--muted:#9fb0bc;--line:#263945;--track:#243642;--idle:#4a6272;--c0:#5b9be0;--c1:#f0b429;--c2:#3fc1ae;--c3:#e272a0;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;line-height:1.45}
+h1,h2,.num,button.m{font-family:"Bricolage Grotesque","Source Sans 3",system-ui,sans-serif}
+.app{height:100%;display:grid;grid-template-rows:auto auto 1fr;gap:12px;padding:16px;max-width:1500px;margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+h1{font-size:clamp(1.4rem,3vw,2rem);margin:0;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+.kpis{display:flex;gap:22px;flex-wrap:wrap}
+.kpi .num{font-size:1.5rem;font-weight:800;line-height:1}
+.kpi .l{color:var(--muted);font-size:.8rem}
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:12px;min-height:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;min-height:0}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+h2{font-size:1rem;margin:0;font-weight:700}
+.hint{color:var(--muted);font-size:.8rem}
+.seg{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px}
+button.m{flex:none;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:4px 12px;font-size:.85rem;font-weight:500;cursor:pointer}
+button.m[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,.rk:focus-visible{outline:2px solid var(--c0);outline-offset:2px}
+.scr{overflow-y:auto;min-height:0;flex:1}
+.rk{display:grid;grid-template-columns:96px 1fr 58px;gap:8px;align-items:center;padding:3px 4px;border-radius:5px;cursor:pointer}
+.rk:hover{background:var(--track)}
+.rk .n{font-weight:600;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tr{height:16px;background:var(--track);border-radius:3px;overflow:hidden}
+.rk:hover .tr{background:var(--panel)}
+.f{height:100%;border-radius:3px;min-width:2px;background:var(--idle);transition:width .35s}
+.v{text-align:right;font-weight:600;font-size:.92rem;font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:2px 4px 2px 10px;font-size:.85rem;font-weight:600}
+.chip button{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:0 6px}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:10px}
+.card{border:1px solid var(--line);border-top-width:4px;border-radius:8px;padding:8px 10px}
+.card .nm{font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .num{font-size:1.5rem;font-weight:800;line-height:1.1}
+.card .l{color:var(--muted);font-size:.78rem}
+.cr{display:grid;grid-template-columns:100px 1fr;gap:4px 10px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}
+.cr .c{font-weight:600;font-size:.88rem}
+.bs{display:grid;gap:3px}
+.b{display:flex;align-items:center;gap:6px}
+.b .tr{flex:1;height:11px}
+.b .f{background:var(--c0)}
+.b .v{width:56px;font-size:.82rem}
+.empty{color:var(--muted);padding:24px 0;text-align:center}
+@media(max-width:860px){
+  html,body{height:auto}
+  .app{height:auto;display:flex;flex-direction:column}
+  .main{grid-template-columns:1fr}
+  .scr{max-height:420px}
+  .cr{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div><h1>Vereadores de Paranaguá</h1><p class="sub">19ª Legislatura. Clique nos vereadores para comparar até 4.</p></div>
+    <div class="kpis" id="kpis"></div>
+  </header>
+
+  <div class="seg" id="seg" role="group" aria-label="Critério do ranking"></div>
+
+  <div class="main">
+    <section class="panel" aria-label="Ranking">
+      <div class="ph"><h2 id="rt">Ranking</h2><span class="hint">Clique numa linha para comparar</span></div>
+      <div class="scr" id="rank"></div>
+    </section>
+    <section class="panel" aria-label="Comparação">
+      <div class="ph"><h2>Comparação</h2><div class="chips" id="chips"></div></div>
+      <div class="scr" id="cmp"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+var M=[["tot","Total"],["ind","Indicações"],["req","Requerimentos"],["proj","Projetos"],["em","Emendas"],["rc","Rel. comissão"],["rv","Rel. vereador"],["pres","Presença"]];
+var CATS=[["proj","Projetos"],["ind","Indicações"],["req","Requerimentos"],["em","Emendas"],["rc","Rel. comissão"],["rv","Rel. vereador"]];
+var D=[
+["Adalberto",61,133,170,4,0,19,98.1],["Aldo",8,129,68,1,1,4,96.4],["Edilson",48,1093,123,0,1,1,97.8],
+["Eduardo",19,292,74,1,7,2,97.7],["Ezequias",2,150,16,1,0,0,100],["Fábio",11,102,51,3,0,0,89.9],
+["Francisco",21,125,96,1,0,4,97.1],["Giovanne",10,93,66,3,1,1,97.6],["Gisleine",48,133,103,2,0,4,96.9],
+["Irineu",57,238,125,3,3,31,96.6],["Lindonei",11,1638,65,2,0,0,91.2],["Luiz",18,15,155,3,1,4,93.1],
+["Marcelo Péke",20,2012,94,3,0,34,98.7],["Márcio",40,1092,118,2,0,0,97.1],["Renan",10,594,72,0,2,3,86.2],
+["Ricardo",16,12,63,1,0,0,91.2],["Tenile",71,1942,98,29,11,48,94.1],["Welington",78,206,116,17,0,0,91.4],["Wilson",3,46,25,1,5,1,100]
+].map(function(r){var o={nome:r[0],proj:r[1],ind:r[2],req:r[3],em:r[4],rc:r[5],rv:r[6],pres:r[7]};o.tot=r[1]+r[2]+r[3]+r[4]+r[5]+r[6];return o});
+var fmt=function(n){return n.toLocaleString("pt-BR")};
+var pf=function(n){return n.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"%"};
+var val=function(k,v){return k==="pres"?pf(v):fmt(v)};
+var cur="tot",sel=["Marcelo Péke","Tenile"];
+var $=function(id){return document.getElementById(id)};
+var sum=function(k){return D.reduce(function(a,d){return a+d[k]},0)};
+var byName=function(n){return D.filter(function(d){return d.nome===n})[0]};
+
+$("kpis").innerHTML=[[D.length,"vereadores"],[fmt(sum("tot")),"proposições"],[fmt(sum("ind")),"indicações"],
+ [pf(D.reduce(function(a,d){return a+d.pres},0)/D.length),"presença média"]].map(function(k){
+ return '<div class="kpi"><div class="num">'+k[0]+'</div><div class="l">'+k[1]+'</div></div>'}).join("");
+
+function toggle(n){
+  var i=sel.indexOf(n);
+  if(i>-1)sel.splice(i,1);else{sel.push(n);if(sel.length>4)sel.shift()}
+  draw();
+}
+
+function drawSeg(){
+  $("seg").innerHTML=M.map(function(m){return '<button class="m" aria-pressed="'+(m[0]===cur)+'" data-k="'+m[0]+'">'+m[1]+'</button>'}).join("");
+  $("seg").querySelectorAll("button").forEach(function(b){b.onclick=function(){cur=b.dataset.k;draw()}});
+}
+
+function draw(){
+  drawSeg();
+  var S=D.slice().sort(function(a,b){return b[cur]-a[cur]});
+  var mx=S[0][cur]||1;
+  $("rt").textContent="Ranking por "+M.filter(function(m){return m[0]===cur})[0][1].toLowerCase();
+  $("rank").innerHTML=S.map(function(d){
+    var i=sel.indexOf(d.nome);
+    var w=cur==="pres"?Math.max(0,(d.pres-80)/20*100):d[cur]/mx*100;
+    return '<div class="rk" tabindex="0" role="button" aria-pressed="'+(i>-1)+'" data-n="'+d.nome+'"><span class="n">'+d.nome+'</span>'+
+      '<div class="tr"><div class="f" style="width:'+w+'%;'+(i>-1?'background:var(--c'+i+')':'')+'"></div></div><span class="v">'+val(cur,d[cur])+'</span></div>';
+  }).join("")+(cur==="pres"?'<p class="hint">Escala de 80% a 100%. Ezequias e Wilson aparecem só como Presente nos gráficos de origem.</p>':'');
+  $("rank").querySelectorAll(".rk").forEach(function(r){
+    r.onclick=function(){toggle(r.dataset.n)};
+    r.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle(r.dataset.n)}};
+  });
+
+  $("chips").innerHTML=sel.map(function(n,i){
+    return '<span class="chip"><i class="dot" style="background:var(--c'+i+')"></i>'+n+'<button aria-label="Remover '+n+'" data-n="'+n+'">×</button></span>'}).join("");
+  $("chips").querySelectorAll("button").forEach(function(b){b.onclick=function(){toggle(b.dataset.n)}});
+
+  if(!sel.length){$("cmp").innerHTML='<div class="empty">Escolha vereadores no ranking para comparar.</div>';return}
+  var P=sel.map(byName);
+  var h='<div class="cards">'+P.map(function(d,i){
+    return '<div class="card" style="border-top-color:var(--c'+i+')"><div class="nm">'+d.nome+'</div><div class="num">'+fmt(d.tot)+'</div><div class="l">proposições</div><div class="l">presença '+pf(d.pres)+'</div></div>'}).join("")+'</div>';
+  h+=CATS.map(function(c){
+    var k=c[0],m=Math.max.apply(null,P.map(function(d){return d[k]}))||1;
+    return '<div class="cr"><div class="c">'+c[1]+'</div><div class="bs">'+P.map(function(d,i){
+      return '<div class="b" title="'+d.nome+'"><div class="tr"><div class="f" style="width:'+(d[k]/m*100)+'%;background:var(--c'+i+')"></div></div><span class="v">'+fmt(d[k])+'</span></div>'}).join("")+'</div></div>';
+  }).join("");
+  h+='<div class="cr"><div class="c">Presença</div><div class="bs">'+P.map(function(d,i){
+    return '<div class="b"><div class="tr"><div class="f" style="width:'+d.pres+'%;background:var(--c'+i+')"></div></div><span class="v">'+pf(d.pres)+'</span></div>'}).join("")+'</div></div>';
+  h+='<p class="hint" style="margin:8px 0 0">Em cada categoria, as barras usam a mesma escala entre os vereadores selecionados.</p>';
+  $("cmp").innerHTML=h;
+}
+draw();
+</script>
+</body>
+</html>
